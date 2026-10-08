@@ -1,6 +1,7 @@
 [AutoProxy 0.2.9]
 ! HomePage: https://github.com/gfwlist/gfwlist
-
+||cloudflare.com
+||speed.cloudflare.com
 !---------403/451/503/520 & URL Redirects---------
 ||blogjav.net
 ||zoominfo.com
