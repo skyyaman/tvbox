@@ -3,6 +3,7 @@
 ||cloudflare.com
 ||speed.cloudflare.com
 ||cloudflarestorage.com
+||dola.com
 !---------403/451/503/520 & URL Redirects---------
 ||blogjav.net
 ||zoominfo.com
