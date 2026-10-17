@@ -30,7 +30,7 @@
         {"key": "配置","name": "🐮配置┃中心","type": 3,"jar":"./jar/二小261016.txt","api": "csp_PanConfigGuard","searchable": 0,"changeable": 0,"indexs": 0,"style": {"type": "list"}},
         {"key": "闪电","name": "💥闪电┃秒播","type": 3,"jar":"./jar/二小261016.txt","api": "csp_WexAiYueYueGuard","searchable": 1,"quickSearch": 1,"changeable": 0},
         {"key": "花卷","name": "💓花卷┃1080P","type": 3,"jar":"./jar/二小261016.txt","api": "csp_AiNewHuaJuanGuard","searchable": 1,"quickSearch": 1,"changeable": 0},
-        {"key": "玩偶","name": "💓‍玩偶┃4K","type": 3,"jar":"./jar/二小261016.txt","api": "csp_AiNewWoggGuard","searchable": 1,"quickSearch": 1,"changeable": 0},
+        {"key": "玩偶","name": "💓玩偶┃4K","type": 3,"jar":"./jar/二小261016.txt","api": "csp_AiNewWoggGuard","searchable": 1,"quickSearch": 1,"changeable": 0},
         {"key": "虎斑","name": "💓虎斑┃4K","type": 3,"jar":"./jar/二小261016.txt","api": "csp_AiNewHuBanGuard","searchable": 1,"quickSearch": 1,"changeable": 0},
         {"key": "木偶","name": "💓木偶┃4K","type": 3,"jar":"./jar/二小261016.txt","api": "csp_AiNewMuOuGuard","searchable": 1,"quickSearch": 1,"changeable": 0},
         {"key": "快影","name": "💓快影┃1080P","type": 3,"jar":"./jar/二小261016.txt","api": "csp_AiNewKuaiYingGuard","searchable": 1,"quickSearch": 1,"changeable": 0},

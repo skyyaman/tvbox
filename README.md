@@ -5,13 +5,13 @@ https://kakaxi.indevs.in/ipv4.txt
 https://github.com/ioptu/migu_video
 
 单仓：
- http://www.饭太硬.net/tv	# 饭太硬接口
-
- http://肥猫.net				# 肥猫接口
-
- http://我不是.摸鱼儿.top			# 摸鱼儿接口
-
- http://tvbox.王二小放牛娃.top		# 王小二放牛娃接口
-
- https://9280.kstore.vip/newwex.json # 王小二放牛娃新接口
+X4更新专用接口.json|20261017|4.4K|https://0.12yue.de5.net/0/666
+X4菠菜pro.json|20261017|88.3K|https://0.12yue.de5.net/5/x4pro.json
+X4菠菜园.json|20261017|50.3K|https://0.12yue.de5.net/5/x4.json
+X4少儿频道.json|20261017|19.2K|https://0.12yue.de5.net/5/tv少儿.json
+饭太硬.json|20261017|16.8K|http://www.饭太硬.net/tv
+摸鱼.json|20261017|25.7K|http://我不是.摸鱼儿.top
+嗷呜.json|20261017|21.0K|http://www.英格里希嗷呜.top/tv
+潇洒.json|20261017|35.6K|https://9877.kstore.space/sun.json
+王二小.json|20261017|24.3K|https://9280.kstore.vip/aiwex.json
  https://github.com/hebijunge/tvbox-config
