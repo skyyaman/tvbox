@@ -32,7 +32,6 @@
         {"key": "闪电","name": "💓闪电┃网盘","type": 3,"jar":"./jar/二小261020.txt","api": "csp_AiNewShanDianGuard","searchable": 1,"quickSearch": 1,"changeable": 0},
         {"key": "花卷","name": "💓花卷┃网盘‍","type": 3,"jar":"./jar/二小261020.txt","api": "csp_AiNewHuaJuanGuard","searchable": 1,"quickSearch": 1,"changeable": 0},
         {"key": "玩偶","name": "💓‍玩偶┃网盘‍","type": 3,"jar":"./jar/二小261020.txt","api": "csp_AiNewWoggGuard","searchable": 1,"quickSearch": 1,"changeable": 0},
-        {"key": "虎斑","name": "💓虎斑┃网盘","type": 3,"jar":"./jar/二小261020.txt","api": "csp_AiNewHuBanGuard","searchable": 1,"quickSearch": 1,"changeable": 0},
         {"key": "木偶","name": "💓木偶┃网盘","type": 3,"jar":"./jar/二小261020.txt","api": "csp_AiNewMuOuGuard","searchable": 1,"quickSearch": 1,"changeable": 0},
         {"key": "快影","name": "💓快影┃网盘","type": 3,"jar":"./jar/二小261020.txt","api": "csp_AiNewKuaiYingGuard","searchable": 1,"quickSearch": 1,"changeable": 0},
         {"key": "剧透","name": "💓剧透┃网盘","type": 3,"jar":"./jar/二小261020.txt","api": "csp_AiNewJuTouGuard","searchable": 1,"quickSearch": 1,"changeable": 0},
