@@ -1,16 +1,13 @@
 {
 "spider": "./jar/二小260924.txt",
 "wallpaper": "https://xn--b44b-mb1gy821b.v.nxog.top/m/t/",
+"lives": [{"name":"longlongago","type":0,"url":"./txt/cctv.txt","playerType":1,"ua":"okhttp/3.15","epg":"http://epg.112114.xyz/?ch={name}&date={date}","logo":"https://epg.112114.xyz/logo/{name}.png"}],
 "sites": [
-    {"key":"豆瓣","name":"豆瓣","type":3,"api":"csp_NewDouBanGuard","searchable":0},
+    {"key":"豆瓣","name":"豆瓣","type":3,"api":"csp_NewDouBanGuard","searchable":0,"ext": "https://cdn.waimaimingtang.com/file/images/bwc/20260414181247-ae51abfbfe.txt"},
     {"key":"比特","name":"🍚比特┃杏坛","type":3,"jar":"./jar/太硬260907.txt","api":"csp_BttwooGuard","timeout":10,"searchable":1,"quickSearch":1,"changeable":1},
     {"key":"糯米","name":"🍚糯米┃杏坛","type":3,"jar":"./jar/太硬260907.txt","api":"csp_NmyswvGuard","timeout":15,"searchable":1,"quickSearch":1,"changeable":1},
     {"key":"视界","name":"🍚视界┃杏坛","type":3,"jar":"./jar/太硬260907.txt","api":"csp_App99Guard","timeout":10,"searchable":1,"quickSearch":1,"changeable":1,"ext":"rfOX1voDIQhH8epBwtCFsuby/mmdmIu8kGlnJc+7VkMRLQ1K+jMy+KN1MKQe0MZ6tmGSO5oFzD8/vWwiSqEpFczDqLrdGT3iH6fZmryrFzKijwYkJUMctdztE0O4CsgYZdBu8XhZSwuhSqqllQz4AZMa1l0sT+1NrbhNIxHkrY0upiYSTLNqEaledgZikMCviOXWr3cPBP4COOeoGUyJSJrrybmUppnWGeDAOHhHOVUSXjwSb+QQvcJIT2lmrf1Bk68myGs7qOqc19tD/rnzf2WOb2MzJZqtURBmUFgaW6ea2dL8OPSpSeVAvaGCAnqwuUNGE9hHpK8jfOs0bLJRdkFLnijAn5Q+ofVM5hgGb8c="},
     {"key":"剧圈","name":"🍚剧圈┃杏坛","type":3,"jar":"./jar/太硬260907.txt","api":"csp_AppSxGuard","timeout":10,"searchable":1,"quickSearch":1,"changeable":1,"ext":"rfOX1voDIQhH8epBwpmIsuSluiuZl4+/lm1iJsy3HwNWMxpf9CY77fshI+kByoxy7DyPatUZ1jk0ty1p"},
-    
-    
-    
-    
     
     {"key": "瓜子", "name": "💥瓜子┃秒播", "type": 3,"api": "csp_WexAiGuaZiGuard", "searchable": 1, "quickSearch": 1, "changeable": 0},
     {"key": "独播", "name": "💥独播┃秒播", "type": 3,"api": "csp_WexAiDuBoKuGuard", "searchable": 1, "quickSearch": 1, "changeable": 0},
@@ -66,24 +63,12 @@
     {"key":"农民2","name":"🤣农民二┃未知","type":3,"api":"csp_XBPQ","jar":"./jar/未知.txt","ext":{"\u526f\u6807\u9898":"\u6b27\u6b4c\u4e13\u5c5e","请求头":"User-Agent$MOBILE_UA","编码":"UTF-8","分类url":"https://vip.wwgz.cn:5200/;;!H"}},
     {"key":"先生","name":"🤣先生┃未知","type":3,"api":"csp_XBPQ","jar":"./jar/未知.txt","ext":{"\u526f\u6807\u9898":"\u6b27\u6b4c\u4e13\u5c5e","请求头":"User-Agent$MOBILE_UA","编码":"UTF-8","分类url":"https://silidm.com/;;!H"}}
 
-],
-"parses": [{
-            "name": "王",
-            "type": 1,
-            "url": "http://122.228.84.103:7777/api/?key=4Dk5tdayvY6NZufEMG&url="
-        }, {
-            "name": "二",
-            "type": 1,
-            "url": "http://110.42.7.182:880/api/?key=7e84f07dc78fbb3406d64a1ab7d966b3&url="
-        }, {
-            "name": "小",
-            "type": 1,
-            "url": "http://43.136.176.188:91/api/?key=4ef232e96172b0bda78d393c695fe7c4&url="
-        }, {
-            "name": "帅",
-            "type": 1,
-            "url": "http://pan.qiaoji8.com/tvbox/neibu.php?url="
-        }
+    ],
+    "parses": [
+        {"name": "王", "type": 1, "url": "http://122.228.84.103:7777/api/?key=4Dk5tdayvY6NZufEMG&url="}, 
+        {"name": "二", "type": 1, "url": "http://110.42.7.182:880/api/?key=7e84f07dc78fbb3406d64a1ab7d966b3&url="}, 
+        {"name": "小","type": 1,"url": "http://43.136.176.188:91/api/?key=4ef232e96172b0bda78d393c695fe7c4&url="}, 
+        {"name": "帅","type": 1,"url": "http://pan.qiaoji8.com/tvbox/neibu.php?url="}
     ],
     "doh": [{
             "name": "Google",
@@ -217,7 +202,6 @@
         }
     ],
     "ads": ["mozai.4gtv.tv","pv.vipwm.cc","static-mozai.4gtv.tv"],
-    "lives": [{"name":"longlongago","type":0,"url":"./txt/cctv.txt","playerType":1,"ua":"okhttp/3.15","epg":"http://epg.112114.xyz/?ch={name}&date={date}","logo":"https://epg.112114.xyz/logo/{name}.png"}],
     "headers": [{
             "host": "hlsztemgsplive.miguvideo.com",
             "header": {
