@@ -1412,7 +1412,7 @@ class AppMain(tk.Tk):
         style.configure('green.TButton', font='Times 10', background='green',padding=0,foreground='green', border=0)
         global flagWin1,flagWin2,flagWin3,flagWin4
         flagWin1=flagWin2=flagWin3=flagWin4=False
-        self.title("杏中考场安排 By longlong")
+        self.title("考场安排 By longlong")
         rootX=self.winfo_screenwidth()
         rootY=self.winfo_screenheight()
         #self.wm_attributes('-topmost',True)     #root窗口置顶
@@ -1429,26 +1429,45 @@ class AppMain(tk.Tk):
     def start_check_update_thread(self):
         """开启后台线程去检查更新，防止卡顿界面"""
         threading.Thread(target=self.check_for_updates, daemon=True).start()
-    def get_remote_version(self,raw_url):
+    def get_remote_version(self, raw_url):
         """通过 Raw 链接获取远程脚本内容，并用正则提取版本号"""    
         try:
             response = requests.get(raw_url, timeout=5)
             if response.status_code == 200:
-                remote_code = response.text            
+                # 获取二进制内容并解码为字符串用于正则匹配
+                remote_bytes = response.content
+                remote_code_str = remote_bytes.decode("utf-8")            
+                
                 # 兼容双引号和单引号
-                match = re.search(r'__version__\s*=\s*[\'"]([^\'"]+)[\'"]', remote_code)            
+                match = re.search(r'__version__\s*=\s*[\'"]([^\'"]+)[\'"]', remote_code_str)            
                 if match:
                     remote_version = match.group(1)
-                    return remote_version,remote_code
+                    # 返回版本号字符串，以及【二进制字节流】用于直接安全写入
+                    return remote_version, remote_bytes
                 else:
                     print("在远程脚本中未找到 __version__ 变量")
-                    return None
+                    return None, None
             else:
                 print(f"获取远程脚本失败，状态码: {response.status_code}")
-                return None
+                return None, None
         except Exception as e:
             print(f"请求网络出错: {e}")
-            return None
+            return None, None
+
+    def update_self(self, remote_bytes):
+        """直接用新代码的二进制字节流覆盖本地当前脚本文件"""
+        try:
+            # 获取当前运行脚本的绝对路径
+            current_file = os.path.abspath(sys.argv[0])        
+            
+            # 用二进制模式 "wb" 写入字节流，绝对不会有多余空行，也不会报错
+            with open(current_file, "wb") as f:
+                f.write(remote_bytes)          
+            messagebox.showinfo('更新成功','🎉 更新成功！请重新启动程序以应用更改。')
+            print("🎉 更新成功！请重新启动程序以应用更改。")
+            sys.exit(0) # 退出当前旧进程
+        except Exception as e:
+            print(f"❌ 写入文件失败（可能由于文件权限或正被占用）: {e}")
     def parse_version(self,version_str):
         """将版本号字符串转换为整数元组，例如 '1.10.2' -> (1, 10, 2)"""
         version_str = version_str.lstrip("v")
@@ -1471,19 +1490,6 @@ class AppMain(tk.Tk):
             self.update_self(remote_code)
         else:
             print("当前已是最新版本，无需更新。")
-    def update_self(self,remote_code):
-        """直接用新代码覆盖本地当前脚本文件"""
-        try:
-            # 获取当前运行脚本的绝对路径
-            current_file = os.path.abspath(sys.argv[0])        
-            # 写入新代码
-            with open(current_file, "wb") as f:
-                f.write(remote_code)           
-            print("🎉 更新成功！请重新启动程序以应用更改。")
-            messagebox.showinfo('更新成功','🎉 更新成功！请重新启动程序以应用更改。')
-            sys.exit(0) # 退出当前旧进程
-        except Exception as e:
-            print(f"❌ 写入文件失败（可能由于文件权限或正被占用）: {e}")
     def setup_config2(self):
         global flagWin1,flagWin2
         if flagWin1:
@@ -1590,7 +1596,7 @@ if __name__ == '__main__':
         a4width_H=123   #           123---100
     __DIR__ = getattr(sys, '_MEIPASS', os.path.abspath(os.path.dirname(__file__)))  #程序所在的目录
     workdir=''
-    examname='杏坛中学考试'
+    examname='考试'
     fileurl=os.path.join(os.path.expanduser("~"), 'Desktop')
     fileurl=u'点击右边按钮选择需要安排的考场数据'
     printFileUrl=u'点击右边按钮选择已安排数据'
