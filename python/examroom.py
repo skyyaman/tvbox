@@ -1454,16 +1454,14 @@ class AppMain(tk.Tk):
             print(f"请求网络出错: {e}")
             return None, None
 
-    def update_self(self, remote_bytes):
+    def update_self(self, remote_bytes, remote_ver):
         """直接用新代码的二进制字节流覆盖本地当前脚本文件"""
         try:
             # 获取当前运行脚本的绝对路径
             current_file = os.path.abspath(sys.argv[0])        
-            
-            # 用二进制模式 "wb" 写入字节流，绝对不会有多余空行，也不会报错
             with open(current_file, "wb") as f:
                 f.write(remote_bytes)          
-            messagebox.showinfo('更新成功','🎉 更新成功！请重新启动程序以应用更改。')
+            messagebox.showinfo('更新成功', f'成功更新到版本 {remote_ver}！请重新启动程序以应用更改。')
             print("🎉 更新成功！请重新启动程序以应用更改。")
             sys.exit(0) # 退出当前旧进程
         except Exception as e:
@@ -1487,7 +1485,7 @@ class AppMain(tk.Tk):
         # 对比版本大小
         if self.parse_version(remote_ver) > self.parse_version(__version__):
             print(f"发现新版本 ({remote_ver})！")
-            self.update_self(remote_code)
+            self.update_self(remote_code,remote_ver)
         else:
             print("当前已是最新版本，无需更新。")
     def setup_config2(self):
