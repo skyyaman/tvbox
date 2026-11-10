@@ -39,7 +39,7 @@ try:
     pd.set_option('future.no_silent_downcasting', True)
 except Exception:
     pass
-CURRENT_VERSION = "26.11.9"
+__version__ = "26.11.10"
 
 class anpai(tk.Toplevel):
     def __init__(self):
@@ -1435,7 +1435,6 @@ class AppMain(tk.Tk):
             response = requests.get(raw_url, timeout=5)
             if response.status_code == 200:
                 remote_code = response.text            
-                # 使用正则匹配形如 __version__ = "1.1.0" 或 __version__ = '1.1.0' 的行
                 # 兼容双引号和单引号
                 match = re.search(r'__version__\s*=\s*[\'"]([^\'"]+)[\'"]', remote_code)            
                 if match:
