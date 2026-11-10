@@ -1463,11 +1463,11 @@ class AppMain(tk.Tk):
         remote_ver = self.get_remote_version(raw_url)
         if not remote_ver:
             return    
-        print(f"当前版本: {CURRENT_VERSION}")
+        print(f"当前版本: {__version__}")
         print(f"远程版本: {remote_ver}")
         
         # 对比版本大小
-        if self.parse_version(remote_ver) > self.parse_version(CURRENT_VERSION):
+        if self.parse_version(remote_ver) > self.parse_version(__version__):
             print(f"发现新版本 ({remote_ver})！")
             self.update_self(raw_url)
         else:
