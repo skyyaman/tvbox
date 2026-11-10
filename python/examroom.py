@@ -1439,7 +1439,7 @@ class AppMain(tk.Tk):
                 match = re.search(r'__version__\s*=\s*[\'"]([^\'"]+)[\'"]', remote_code)            
                 if match:
                     remote_version = match.group(1)
-                    return remote_version
+                    return remote_version,remote_code
                 else:
                     print("在远程脚本中未找到 __version__ 变量")
                     return None
@@ -1455,12 +1455,11 @@ class AppMain(tk.Tk):
         try:
             return tuple(map(int, version_str.split(".")))
         except ValueError:
-            # 如果版本号包含非数字（如 beta, alpha），降级处理返回原字符串或0
             return (0,)
     def check_for_updates(self): #检查远程脚本并更新
         print('开始更新')
         raw_url = f"http://tv.skyyareply.eu.org/https://raw.githubusercontent.com/skyyaman/tvbox/refs/heads/main/python/examroom.py"
-        remote_ver = self.get_remote_version(raw_url)
+        remote_ver, remote_code = self.get_remote_version(raw_url)
         if not remote_ver:
             return    
         print(f"当前版本: {__version__}")
@@ -1469,7 +1468,7 @@ class AppMain(tk.Tk):
         # 对比版本大小
         if self.parse_version(remote_ver) > self.parse_version(__version__):
             print(f"发现新版本 ({remote_ver})！")
-            self.update_self(raw_url)
+            self.update_self(remote_code)
         else:
             print("当前已是最新版本，无需更新。")
     def update_self(self,remote_code):
@@ -1478,8 +1477,8 @@ class AppMain(tk.Tk):
             # 获取当前运行脚本的绝对路径
             current_file = os.path.abspath(sys.argv[0])        
             # 写入新代码
-            with open(current_file, "w", encoding="utf-8") as f:
-                f.write(remote_code)            
+            with open(current_file, "wb") as f:
+                f.write(remote_code)           
             print("🎉 更新成功！请重新启动程序以应用更改。")
             sys.exit(0) # 退出当前旧进程
         except Exception as e:
