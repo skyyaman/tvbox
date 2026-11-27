@@ -1,3 +1,4 @@
+#20261125 行高问题，要用xlsxwriter==3.2.0版本才行
 #20261110 发现BUG，室内表，从中间场室打印时发现总是从第1试室开始，已解决
 #20261015 发现BUG，室外表，从中间场室打印时发现总是从第1试室开始，所以Index1这里改为roomid-1，已解决
 #20260629 为了节约纸张，每个试室是4科时，纵向打印，可以节约40%
@@ -20,7 +21,7 @@
 #打包：pyinstaller --add-data "open.gif;." -F -w -i logo.ico --console examroom.py
 #佛山的考试选科是高考模式，要统计各选科的地址，用此公式可以：=INDEX($M$2:$X$758,ROW(1:1),MATCH("*" & Y2 & "*",$M$1:$X$1,0)+1)
 import tkinter as tk
-import xlsxwriter
+import xlsxwriter #行高问题，要用xlsxwriter==3.2.0版本才行，实测3.3.1会出现行高输出不对的问题
 import pandas as pd
 import requests
 import os,sys
@@ -39,7 +40,7 @@ try:
     pd.set_option('future.no_silent_downcasting', True)
 except Exception:
     pass
-__version__ = "26.11.10"
+__version__ = "26.11.27"
 
 class anpai(tk.Toplevel):
     def __init__(self):
@@ -1245,6 +1246,7 @@ class Win2Print(tk.Toplevel):
         indexdata=self.StData.sort_values(by=['班级','学号'],na_position='first',ascending=(True,True)).reset_index()
         '''上面一行，原来是直接对self.stdata进行了更改，多加了一列index,reset_index会增加新列。导致多运行几次就出错 ，
         所以不要对原self改动，用新变量就好了'''
+
         for i in range(startclass,endclass+1):
             try:
                 rowlist=indexdata[indexdata.班级==i].index.tolist()
@@ -1257,6 +1259,7 @@ class Win2Print(tk.Toplevel):
                     printData.drop(columns=[self.RealSubject[j]+'考场号'],axis=1,inplace=True)  #班级核对表不用考场号 删除   
                 printData = printData.dropna(axis=1, how='all')     #当某列数据全为nan时，删除此列
                 worksheet = workbook.add_worksheet(str(i))      #增加一个工作表。以班名为工作表名
+                worksheet.set_default_row(30) 
                 worksheet.write_row(1,0,list(printData),font_format) #写表头            
                 worksheet.set_row(0,40)         #第一行 标题，行高多一点
                 worksheet.set_row(1,28)         #第一行 标题，行高多一点
@@ -1281,7 +1284,8 @@ class Win2Print(tk.Toplevel):
             worksheet.set_column(3, 3,name_width_base/rate)    #姓名列列宽
             worksheet.set_column(4, printData.shape[1]-1, subject_width_base/rate) #后面列的列宽
 
-            everyheight=self.queryheight(a4height,printData.shape[0])
+            everyheight=self.queryheight(a4height,printData.shape[0],i)
+
             for i in range(2,printData.shape[0]+2):     #所有行的行高                
                 worksheet.set_row(i,everyheight,font_format)   #动态分布行高
         try:
@@ -1290,14 +1294,16 @@ class Win2Print(tk.Toplevel):
             if self.output[0][0].get():xls2pdf.xlsx(self,printclass)   #PDF开关打开就导出PDF
             if self.output[1][0].get():printer_file(workdir+printclass)   #打印开关打开就打印  
         except xlsxwriter.exceptions.FileCreateError:
-            messagebox.showinfo('出错','【班级核对表.xlsx】文件已经打开！！关闭文件再来一次~~')   
-    def queryheight(self,height,datasum):
+            messagebox.showinfo('出错','【班级核对表.xlsx】文件已经打开！！关闭文件再来一次~~')
+
+    def queryheight(self,height,datasum,i):
+
         everyheight=round(height/datasum,1)
         while True:
             if everyheight*datasum>height:
-                everyheight=everyheight-0.1
+                everyheight=everyheight-0.000001
             else:
-                if everyheight>14.9:everyheight=14.9
+                if everyheight>15:everyheight=15.000001
                 return everyheight
 
     def exit2(self):
@@ -1427,22 +1433,16 @@ class AppMain(tk.Tk):
         self.fuction2 = ttk.Button(self, text='打印座位表', command=self.print,bootstyle="success").place(x=100,y=170, width=200, height=40)    
         self.closeButton=ttk.Button(self, text='关闭窗口', command=self.exitMainApp,bootstyle="success").place(x=100,y=240, width=200, height=40)        
     def start_check_update_thread(self):
-        """开启后台线程去检查更新，防止卡顿界面"""
         threading.Thread(target=self.check_for_updates, daemon=True).start()
     def get_remote_version(self, raw_url):
-        """通过 Raw 链接获取远程脚本内容，并用正则提取版本号"""    
         try:
             response = requests.get(raw_url, timeout=5)
             if response.status_code == 200:
-                # 获取二进制内容并解码为字符串用于正则匹配
                 remote_bytes = response.content
-                remote_code_str = remote_bytes.decode("utf-8")            
-                
-                # 兼容双引号和单引号
+                remote_code_str = remote_bytes.decode("utf-8")          
                 match = re.search(r'__version__\s*=\s*[\'"]([^\'"]+)[\'"]', remote_code_str)            
                 if match:
                     remote_version = match.group(1)
-                    # 返回版本号字符串，以及【二进制字节流】用于直接安全写入
                     return remote_version, remote_bytes
                 else:
                     print("在远程脚本中未找到 __version__ 变量")
@@ -1454,14 +1454,13 @@ class AppMain(tk.Tk):
             print(f"请求网络出错: {e}")
             return None, None
 
-    def update_self(self, remote_bytes, remote_ver):
+    def update_self(self, remote_bytes):
         """直接用新代码的二进制字节流覆盖本地当前脚本文件"""
         try:
-            # 获取当前运行脚本的绝对路径
             current_file = os.path.abspath(sys.argv[0])        
             with open(current_file, "wb") as f:
                 f.write(remote_bytes)          
-            messagebox.showinfo('更新成功', f'成功更新到版本 {remote_ver}！请重新启动程序以应用更改。')
+            messagebox.showinfo('更新成功','🎉 更新成功！请重新启动程序以应用更改。')
             print("🎉 更新成功！请重新启动程序以应用更改。")
             sys.exit(0) # 退出当前旧进程
         except Exception as e:
@@ -1474,18 +1473,13 @@ class AppMain(tk.Tk):
         except ValueError:
             return (0,)
     def check_for_updates(self): #检查远程脚本并更新
-        print('开始更新')
         raw_url = f"http://tv.skyyareply.eu.org/https://raw.githubusercontent.com/skyyaman/tvbox/refs/heads/main/python/examroom.py"
         remote_ver, remote_code = self.get_remote_version(raw_url)
         if not remote_ver:
             return    
-        print(f"当前版本: {__version__}")
-        print(f"远程版本: {remote_ver}")
-        
-        # 对比版本大小
         if self.parse_version(remote_ver) > self.parse_version(__version__):
             print(f"发现新版本 ({remote_ver})！")
-            self.update_self(remote_code,remote_ver)
+            self.update_self(remote_code)
         else:
             print("当前已是最新版本，无需更新。")
     def setup_config2(self):
@@ -1526,6 +1520,7 @@ def license(): #简单授权
     except:
         messagebox.showinfo('出错','不能联网，请确认网络是否正常再试一次抬抬/by longlong？')
         return False
+
 def getname(list1):
     colName=[]
     for i in range(int(len(list1)/4)):colName.append(list1[4*i+2])  #得到科目列表
